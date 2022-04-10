@@ -4,8 +4,8 @@ Compiler le programme à l'aide du cmake.
 
 Contrôle:  
 
-  &nbsp;Caméra:  
-    &nbsp;&nbsp;C - Switch entre EulerCaméra et TrackballCaméra  
+  *Caméra:  
+    *C - Switch entre EulerCaméra et TrackballCaméra  
     Clique gauche et mouvement de la souris pour déplacer la caméra  
     Molette souri pour zomer
   
