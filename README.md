@@ -12,27 +12,27 @@ Contrôle:
   </blockquote>
   Déplacement:  
   <blockquote>
-    Z - Avancer  
-    Q - Gauche  
-    S - Reculer  
-    D - Droite  
-    Space - Haut  
-    Shift - Bas  
+    <p>Z - Avancer  </p>
+    <p>Q - Gauche  </p>
+    <p>S - Reculer  </p>
+    <p>D - Droite  </p>
+    <p>Space - Haut  </p>
+    <p>Shift - Bas  </p>
     </blockquote>
   Chargement Démo:  
   <blockquote>
-    0 - Démo clear  
-    1 - Démo HelloMyApp  
-    2 - Démo HelloBezierCurve  
-    3 - Démo HelloBezierSurface  
-    4 - Démo HelloSphereMaterial  
+    <p>0 - Démo clear  </p>
+    <p>1 - Démo HelloMyApp  </p>
+    <p>2 - Démo HelloBezierCurve  </p>
+    <p>3 - Démo HelloBezierSurface  </p>
+    <p>4 - Démo HelloSphereMaterial  </p>
   </blockquote>
   Mode d'affichage:  
   <blockquote>
-    T - coordonnées de texture  
-    N - Normal  
-    Re-appuyer sur le mode actif (N ou T) pour revenir au mode de base.  
-    W - Switch Drawfill  
+    <p>T - coordonnées de texture  </p>
+    <p>N - Normal  </p>
+    <p>Re-appuyer sur le mode actif (N ou T) pour revenir au mode de base.  </p>
+    <p>W - Switch Drawfill  </p>
    </blockquote>
 </blockquote>
 
