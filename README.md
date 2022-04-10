@@ -6,9 +6,9 @@ Contrôle:
 <blockquote>
   Caméra:
   <blockquote>
-    <p>C - Switch entre EulerCaméra et TrackballCaméra  </p>
-    <p>Clique gauche et mouvement de la souris pour déplacer la caméra  </p>
-    <p>Molette souri pour zomer </p>
+    <p>C - Switch entre EulerCaméra et TrackballCaméra</p>
+    <p>Clique gauche et mouvement de la souris pour déplacer la caméra</p>
+    <p>Molette souri pour zomer</p>
   </blockquote>
   Déplacement:  
   <blockquote>
