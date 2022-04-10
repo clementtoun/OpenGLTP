@@ -4,10 +4,11 @@
 
 #include "Renderer.h"
 
-Renderer::Renderer(Shader &shader, Shader &lineShader, int width, int height) : m_active_camera(0) {
+Renderer::Renderer(Shader &shader, Shader &lineShader, Shader &lightShader, int width, int height) : m_active_camera(0) {
 
     m_shader = shader;
     m_lineShader = lineShader;
+    m_lightShader = lightShader;
     m_width = width;
     m_height = height;
 
@@ -26,17 +27,30 @@ Renderer::Renderer(Shader &shader, Shader &lineShader, int width, int height) : 
 Renderer::~Renderer() {
     for(auto d : m_drawables)
         delete d;
+    for(auto l : m_lights)
+        delete l;
     m_shader.deleteProg();
+    m_lineShader.deleteProg();
+    m_lightShader.deleteProg();
+    m_cameraconstructors.clear();
+    m_camera.reset(nullptr);
 }
 
 void Renderer::Draw() {
     for(Drawable *drawable : m_drawables){
         if (drawable->getType() == TRIANGLE_MESH){
             m_shader.use();
+            m_shader.setVec3("eyePos", m_camera->position());
             m_shader.setMat4("projection", m_camera->projectionmatrix());
             m_shader.setMat4("view", m_camera->viewmatrix());
-            m_shader.setVec4("lightVector", m_lightVector);
             m_shader.setBool("normalmode", m_normal_mode);
+            m_shader.setBool("Texcoordmode", m_Texcoord_mode);
+
+            for(int i = 0; i < (int) m_lights.size(); i++){
+                std::string str_i = std::to_string(i);
+                m_shader.setVec4("lights["+str_i+"].vec", m_lights[i]->getVec());
+                m_shader.setVec3("lights["+str_i+"].color", m_lights[i]->getColor());
+            }
 
             drawable->Draw(m_shader);
         }
@@ -45,6 +59,12 @@ void Renderer::Draw() {
             m_lineShader.setMat4("projection", m_camera->projectionmatrix());
             m_lineShader.setMat4("view", m_camera->viewmatrix());
             drawable->Draw(m_lineShader);
+        }
+        for(auto light : m_lights){
+            m_lightShader.use();
+            m_lightShader.setMat4("projection", m_camera->projectionmatrix());
+            m_lightShader.setMat4("view", m_camera->viewmatrix());
+            light->Draw(m_lightShader);
         }
     }
 }
@@ -56,7 +76,7 @@ void Renderer::resize(int width, int height) {
 }
 
 void Renderer::add_Drawable(Drawable *drawable) {
-    m_drawables.push_back(drawable);
+    m_drawables.emplace_back(drawable);
 }
 
 void Renderer::change_Camera(){
@@ -71,11 +91,19 @@ Camera* Renderer::get_Camera() {
     return m_camera.get();
 }
 
-void Renderer::add_Light(glm::vec4 lightVector) {
-    m_lightVector = lightVector;
+void Renderer::add_Light(Light *light) {
+    m_lights.emplace_back(light);
 }
 
 void Renderer::toggleNormalmode() {
+    if(m_Texcoord_mode)
+        m_Texcoord_mode = false;
     m_normal_mode = !m_normal_mode;
+}
+
+void Renderer::toggleTexcoordmode() {
+    if(m_normal_mode)
+        m_normal_mode = false;
+    m_Texcoord_mode = !m_Texcoord_mode;
 }
 

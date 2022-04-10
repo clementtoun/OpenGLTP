@@ -1,11 +1,10 @@
-#include <iostream>
 #include "Bezier.h"
 
 glm::vec3 lerp(const glm::vec3 p1, const glm::vec3 p2, const float t) {
     return p1 * (1 - t) + p2 * t;
 }
 
-glm::vec3 de_casteljau(const float t, const std::vector<glm::vec3> &c_point) {
+glm::vec3 de_casteljau(const double t, const std::vector<glm::vec3> &c_point) {
     std::vector<glm::vec3> beta = c_point;
     int N = (int) beta.size();
     for(int j = 1; j < N; j++){
@@ -16,15 +15,19 @@ glm::vec3 de_casteljau(const float t, const std::vector<glm::vec3> &c_point) {
     return beta[0];
 }
 
-void BezierSurface(const int w, const int h, const std::vector<std::vector<glm::vec3>> &c_point_grid, std::vector<glm::vec3> &vertices, std::vector<unsigned int> &indices) {
+void BezierSurface(const int w, const int h, const std::vector<std::vector<glm::vec3>> &c_point_grid, std::vector<glm::vec3> &vertices, std::vector<unsigned int> &indices, std::vector<glm::vec2> &TexCoords) {
 
     std::vector<glm::vec3> b_j;
+    float u_r, v_r;
     for(int u = 0; u < w; u++) {
+            u_r = static_cast<float>(u) / static_cast<float> (w-1);
             for(auto &i : c_point_grid) {
-                b_j.emplace_back(de_casteljau(static_cast<float>(u) / static_cast<float> (w-1), i));
+                b_j.emplace_back(de_casteljau(u_r, i));
             }
             for(int v = 0; v < h; v++) {
-                    vertices.emplace_back(de_casteljau(static_cast<float>(v) / static_cast<float> (h-1), b_j));
+                v_r = static_cast<float>(v) / static_cast<float> (h-1);
+                vertices.emplace_back(de_casteljau(v_r, b_j));
+                TexCoords.emplace_back(glm::vec2(u_r,v_r));
             }
             b_j.clear();
     }
@@ -59,15 +62,40 @@ void BezierCurve_SegCount(const int nb_segment, const std::vector<glm::vec3> &c_
     assert(seg_count == nb_segment);
 }
 
-void BezierCurve_SegLenght(const float segmentLenght, const std::vector<glm::vec3> &c_point, std::vector<glm::vec3> &vertices, std::vector<unsigned int> &indices) {
-    double step = 1.0f/(double) segmentLenght;
-    int index = 0;
-    for(double t = 0.0; t < 1.0+step; t+=step) {
-        vertices.emplace_back(de_casteljau(t, c_point));
-        if(index > 0) {
-            indices.emplace_back(index-1);
+void BezierCurve_SegLenght(const float segmentLenght, const float epsilon, const std::vector<glm::vec3> &c_point, std::vector<glm::vec3> &vertices, std::vector<unsigned int> &indices) {
+        int index = 0;
+        double a = 0.0f;
+        double b, m, im;
+        m = 0.f;
+        glm::vec3 p1, p2;
+        p1 = de_casteljau(a, c_point);
+        vertices.emplace_back(p1);
+        while(glm::distance(p1,c_point.back()) > segmentLenght + epsilon){
+            b = 1.0f;
+            m = (a+b) / 2.f;
+            p2 = de_casteljau(m, c_point);
+            im = glm::distance(p1,p2) - segmentLenght;
+            while( (im > epsilon or im < -epsilon)){
+                if(im > 0) {
+                    b = m;
+                }
+                else {
+                    a = m;
+                }
+                m = (a+b) / 2.f;
+                p2 = de_casteljau(m, c_point);
+                im = glm::distance(p1,p2) - segmentLenght;
+            }
+            //std::cout << glm::distance(p1,p2) << std::endl;
+            vertices.emplace_back(p2);
             indices.emplace_back(index);
+            indices.emplace_back(++index);
+            p1 = p2;
+            a = m;
         }
-        index++;
-    }
+        if(m != 1.0f){
+            vertices.emplace_back(de_casteljau(1.0f, c_point));
+            indices.emplace_back(index);
+            indices.emplace_back(++index);
+        }
 }

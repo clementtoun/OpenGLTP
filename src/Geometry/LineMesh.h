@@ -28,8 +28,9 @@ public:
 protected:
     std::vector<glm::vec3> m_vertices;
     std::vector<unsigned int> m_indices;
-
     GLuint m_VAO;
+    glm::vec3 m_color;
+    
 private:
 
     void clear();

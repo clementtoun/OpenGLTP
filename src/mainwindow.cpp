@@ -6,9 +6,8 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 
-#include <iostream>
 #include <sstream>
-#include <iomanip>
+#include <QListView>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 
@@ -17,13 +16,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     format.setProfile(QSurfaceFormat::CoreProfile);
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
-
-    QRect rec = QApplication::desktop()->screenGeometry();
-    int w = rec.width();
-    int h = rec.height();
-    resize(w/1.5, h/1.5);
-    move(w/2 - (width()/2),h/2 - (height()/2));
-    std::cout << w << '/' << h << '/' << width() << '/' << height() << std::endl;
 
     ui->setupUi(this);
 
@@ -35,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete openglWidget;
 }
 
 void MainWindow::on_action_Version_OpenGL_triggered() {
@@ -49,5 +42,21 @@ void MainWindow::on_action_Version_OpenGL_triggered() {
 
 void MainWindow::on_actionHello_clear_triggered() {
     openglWidget->activatedemo(0);
+}
+
+void MainWindow::on_actionHello_MyApp_triggered() {
+    openglWidget->activatedemo(1);
+}
+
+void MainWindow::on_actionHello_BezierCurve_triggered() {
+    openglWidget->activatedemo(2);
+}
+
+void MainWindow::on_actionHello_BezierSurface_triggered() {
+    openglWidget->activatedemo(3);
+}
+
+void MainWindow::on_actionHello_SphereMaterial_triggered() {
+    openglWidget->activatedemo(4);
 }
 

@@ -39,17 +39,13 @@
      <string>&amp;Demo</string>
     </property>
     <addaction name="actionHello_clear"/>
+    <addaction name="actionHello_MyApp"/>
+    <addaction name="actionHello_BezierCurve"/>
+    <addaction name="actionHello_BezierSurface"/>
+    <addaction name="actionHello_SphereMaterial"/>
    </widget>
    <addaction name="menu_Demo"/>
    <addaction name="menuInfo"/>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Version_OpenGL">
@@ -60,6 +56,26 @@
   <action name="actionHello_clear">
    <property name="text">
     <string>Hello clear ...</string>
+   </property>
+  </action>
+  <action name="actionHello_MyApp">
+   <property name="text">
+    <string>Hello MyApp ...</string>
+   </property>
+  </action>
+  <action name="actionHello_BezierCurve">
+   <property name="text">
+    <string>Hello BezierCurve ...</string>
+   </property>
+  </action>
+  <action name="actionHello_BezierSurface">
+   <property name="text">
+    <string>Hello BezierSurface ...</string>
+   </property>
+  </action>
+  <action name="actionHello_SphereMaterial">
+   <property name="text">
+    <string>Hello SphereMaterial ...</string>
    </property>
   </action>
  </widget>

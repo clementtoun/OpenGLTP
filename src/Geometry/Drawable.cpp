@@ -40,10 +40,6 @@ void Drawable::add_model(const glm::mat4 &model) {
     m_model.emplace_back(model);
 }
 
-void Drawable::setColor(glm::vec3 color) {
-    m_material.s_color = color;
-}
-
 Mesh_type Drawable::getType() const {
     return m_type;
 }

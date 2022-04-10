@@ -17,12 +17,20 @@ public:
     // forbid copy of a main window
     MainWindow(const MainWindow&) = delete;
     MainWindow &operator=(const MainWindow&) = delete;
-    ~MainWindow();
+    ~MainWindow() override;
 
 private slots:
     void on_action_Version_OpenGL_triggered();
 
     void on_actionHello_clear_triggered();
+
+    void on_actionHello_MyApp_triggered();
+
+    void on_actionHello_BezierCurve_triggered();
+
+    void on_actionHello_BezierSurface_triggered();
+
+    void on_actionHello_SphereMaterial_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -12,27 +12,29 @@
 #include "Shader.h"
 #include "Geometry/Drawable.h"
 #include "Geometry/Mesh.h"
+#include "Geometry/Light.h"
 #include "camera.h"
 
 class Renderer {
 
 public:
-    Renderer(Shader &shader, Shader &lineShader, int width, int height);
+    Renderer(Shader &shader, Shader &lineShader, Shader &lightShader, int width, int height);
     ~Renderer();
     void resize(int width, int height);
     void Draw();
     void add_Drawable(Drawable *drawable);
-    void add_Light(glm::vec4 light);
+    void add_Light(Light *light);
     void change_Camera();
     Camera * get_Camera();
     void toggleNormalmode();
+    void toggleTexcoordmode();
 
-protected:
-    glm::vec4 m_lightVector = glm::vec4(-5.0,7.0,3.0,1.0);
 private:
     std::vector<Drawable*> m_drawables;
+    std::vector<Light*> m_lights;
     Shader m_shader;
     Shader m_lineShader;
+    Shader m_lightShader;
 
     int m_width;
     int m_height;
@@ -43,6 +45,7 @@ private:
     unsigned int m_active_camera;
 
     bool m_normal_mode = 0;
+    bool m_Texcoord_mode = 0;
 
 };
 

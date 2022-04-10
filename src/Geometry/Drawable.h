@@ -24,13 +24,11 @@ public:
     void scale(glm::vec3 scale, int index = 0);
     void setModel(const glm::mat4 &model, int index = 0);
     void add_model(const glm::mat4 &model);
-    void setColor(glm::vec3 color);
     Mesh_type getType() const;
 
 
 protected:
     std::vector<glm::mat4> m_model{glm::mat4(1.0f)};
-    Material m_material{DEFAULT_COLOR};
     Mesh_type m_type;
 
 };

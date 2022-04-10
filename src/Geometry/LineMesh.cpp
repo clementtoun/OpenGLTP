@@ -5,12 +5,12 @@
 #include "LineMesh.h"
 
 LineMesh::LineMesh() {
-    m_material.s_color = DEFAULT_COLOR;
+    m_color = DEFAULT_COLOR;
     m_type = LINE_MESH;
 }
 
 LineMesh::LineMesh(std::vector<glm::vec3> &vertices, std::vector<unsigned int> &indices) : m_vertices(vertices), m_indices(indices) {
-    m_material.s_color = DEFAULT_COLOR;
+    m_color = DEFAULT_COLOR;
     m_type = LINE_MESH;
     setupLineMesh();
 }
@@ -40,7 +40,7 @@ void LineMesh::Draw(Shader &shader) {
     for(int i = 0; i < (int)m_model.size(); i++) {
         shader.use();
         shader.setMat4("model", m_model[i]);
-        shader.setVec3("color",m_material.s_color);
+        shader.setVec3("color", m_color);
 
         glBindVertexArray(m_VAO);
         glDrawElements(GL_LINES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);

@@ -11,7 +11,7 @@ class BezierCurveMesh : public LineMesh {
 public:
 
     BezierCurveMesh(int nb_segment, const std::vector<glm::vec3> &c_point);
-    BezierCurveMesh(float segment_size, const std::vector<glm::vec3> &c_point);
+    BezierCurveMesh(float segment_size, float epsilon, const std::vector<glm::vec3> &c_point);
 
 };
 

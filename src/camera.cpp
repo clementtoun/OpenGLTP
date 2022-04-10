@@ -57,6 +57,10 @@ glm::vec3 &Camera::position() {
     return _position;
 }
 
+void Camera::setposition(glm::vec3 position) {
+    _position = position;
+}
+
 void Camera::setviewport(glm::vec4 viewport) {
     _viewport = viewport;
 }
@@ -85,18 +89,22 @@ EulerCamera::~EulerCamera() = default;
 // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 void EulerCamera::processkeyboard(Camera_Movement direction, GLfloat deltaTime) {
     GLfloat velocity = _movementspeed * deltaTime;
-    if (direction == FORWARD)
-        _position += _front * velocity;
-    if (direction == BACKWARD)
-        _position -= _front * velocity;
+    if (direction == FORWARD) {
+        glm::vec3 front_xz = glm::normalize(glm::vec3(_front.x, 0.0f, _front.z));
+        _position += front_xz * velocity;
+    }
+    if (direction == BACKWARD) {
+        glm::vec3 front_xz = glm::normalize(glm::vec3(_front.x, 0.0f, _front.z));
+        _position -= front_xz * velocity;
+    }
     if (direction == LEFT)
         _position -= _right * velocity;
     if (direction == RIGHT)
         _position += _right * velocity;
     if (direction == UP)
-        _position += _up * velocity;
+        _position += glm::vec3(0.0f,1.0f,0.0f) * velocity;
     if (direction == DOWN)
-        _position -= _up * velocity;
+        _position -= glm::vec3(0.0f,1.0f,0.0f) * velocity;
 }
 
 

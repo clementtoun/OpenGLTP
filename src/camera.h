@@ -35,6 +35,7 @@ public:
     glm::mat4 projectionmatrix() const;
     float &zoom();
     glm::vec3 &position();
+    void setposition(glm::vec3 position);
     void setAspect(GLfloat aspect);
 
     void setviewport(glm::vec4 viewport);

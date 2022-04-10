@@ -28,13 +28,14 @@ FILE(GLOB_RECURSE
         folder_source
         ${CMAKE_SOURCE_DIR}/src/*.cpp
         ${CMAKE_SOURCE_DIR}/src/Geometry/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/Demo/*.cpp
         )
 
 FILE(GLOB_RECURSE
         folder_header
         ${CMAKE_SOURCE_DIR}/src/*.h
         ${CMAKE_SOURCE_DIR}/src/Geometry/*.h
-
+        ${CMAKE_SOURCE_DIR}/src/Demo/*.h
         )
 
 FILE(GLOB_RECURSE
@@ -65,7 +66,7 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 add_executable(OpenGLTP
         ${folder_source}
         ${folder_header}
-        ${folder_ui} src/Geometry/Material.cpp src/Geometry/Material.h src/Geometry/Light.cpp src/Geometry/Light.h)
+        ${folder_ui})
 
 set(EXT_LIBS Qt5::OpenGL ${OPENGL_LIBRARIES})
 

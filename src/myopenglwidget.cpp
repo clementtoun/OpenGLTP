@@ -1,5 +1,8 @@
 #include "myopenglwidget.h"
-
+#include "Demo/HelloMyApp.h"
+#include "Demo/HelloBezierCurve.h"
+#include "Demo/HelloBezierSurface.h"
+#include "Demo/HelloSphereMaterial.h"
 
 #include <QMessageBox>
 #include <QApplication>
@@ -7,13 +10,31 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <QDockWidget>
 
 MyOpenGLWidget::MyOpenGLWidget(QWidget *parent) :QOpenGLWidget(parent), _openglDemo(nullptr), _lastime(0) {
     setFocusPolicy(Qt::StrongFocus); startTimer(1000/60);
     // add all demo constructors here
+
     _democonstructors.emplace_back([](int width, int height)->OpenGLDemo*{
-        std::cout << "Hello cube" << std::endl; return new OpenGLDemo(width, height);
+        std::cout << "Hello clear" << std::endl; return new OpenGLDemo(width, height);
         } );
+
+    _democonstructors.emplace_back([](int width, int height)->HelloMyApp*{
+        std::cout << "Hello MyApp" << std::endl; return new HelloMyApp(width, height);
+    } );
+
+    _democonstructors.emplace_back([](int width, int height)->HelloBezierCurve*{
+        std::cout << "Hello BezierCurve" << std::endl; return new HelloBezierCurve(width, height);
+    } );
+
+    _democonstructors.emplace_back([](int width, int height)->HelloBezierSurface*{
+        std::cout << "Hello BezierSurface" << std::endl; return new HelloBezierSurface(width, height);
+    } );
+
+    _democonstructors.emplace_back([](int width, int height)->HelloSphereMaterial*{
+        std::cout << "Hello SphereMaterial" << std::endl; return new HelloSphereMaterial(width, height);
+    } );
 }
 
 MyOpenGLWidget::~MyOpenGLWidget() {
@@ -22,12 +43,12 @@ MyOpenGLWidget::~MyOpenGLWidget() {
 
 QSize MyOpenGLWidget::minimumSizeHint() const
 {
-    return {512, 512};
+    return {256, 256};
 }
 
 QSize MyOpenGLWidget::sizeHint() const
 {
-    return {1080, 720};
+    return {512, 512};
 }
 
 void MyOpenGLWidget::cleanup() {
@@ -45,7 +66,6 @@ void MyOpenGLWidget::initializeGL() {
 void MyOpenGLWidget::paintGL() {
     std::int64_t starttime = QDateTime::currentMSecsSinceEpoch();
     _openglDemo->draw();
-    glFinish();
     std::int64_t endtime = QDateTime::currentMSecsSinceEpoch();
     _lastime = endtime-starttime;
 }
@@ -88,6 +108,7 @@ void MyOpenGLWidget::keyPressEvent(QKeyEvent *event) {
     switch(key) {
         case Qt::Key_Escape:
             QApplication::quit();
+            break;
         // Demo keys
         case Qt::Key_0:
         case Qt::Key_1:
