@@ -1,2 +1,3 @@
-# OpenGLTP
-TP opengl M1
+# OpenGLTP Lefranc Clément
+
+Compiler le programme à l'aide du cmake.
