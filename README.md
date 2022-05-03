@@ -1,6 +1,6 @@
 # OpenGLTP Lefranc Clément  
 
-Compiler le programme à l'aide de cmake et du fichier CmakeLists.cmake.  
+Compiler le programme à l'aide de cmake et du fichier CmakeLists.txt.  
 
 Contrôle:  
 <blockquote>
